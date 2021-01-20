@@ -1,81 +1,222 @@
 *
-  box-sizing border-box
+  box-sizing: border-box
+
+@font-face
+  font-family: 'Montserrat'
+  font-style: normal
+  font-weight: 400
+  font-display: swap
+  src: url('../fonts/Montserrat-Regular.ttf') format('truetype')
+
+@font-face
+  font-family: 'Montserrat-Medium'
+  font-style: normal
+  font-weight: 500
+  font-display: swap
+  src: url('../fonts/Montserrat-Medium.ttf') format('truetype')
+
+@font-face
+  font-family: 'Montserrat-SemiBold'
+  font-style: normal
+  font-weight: 600
+  font-display: swap
+  src: url('../fonts/Montserrat-SemiBold.ttf') format('truetype')
+
+@font-face
+  font-family: 'Montserrat-Bold'
+  font-style: normal
+  font-weight: 700
+  font-display: swap
+  src: url('../fonts/Montserrat-Bold.ttf') format('truetype')
 
 .container
-  width 100%
-  height 657px
-  display flex
-  justify-content center
-  font-family 'Montserrat', sans-serif
-  background-color #FFFAE6
+  width: 100%
+  height: 657px
+  display: flex
+  justify-content: center
+  background-color: #FFFAE6
 
 .content
-  width 92%
-  height 500px
-  margin 55px 0 0 0
-  display flex
-  flex-direction column
-  background-color #FFFFFF
-  border-radius 5px
-  -webkit-box-shadow 0px 0px 3px 0px rgba(0,0,0,0.1)
-  -moz-box-shadow 0px 0px 3px 0px rgba(0,0,0,0.1)
-  box-shadow 0px 0px 3px 0px rgba(0,0,0,0.1)
+  width: 92%
+  height: 500px
+  margin: 55px 0 0 0
+  display: flex
+  flex-direction: column
+  font-family: 'Montserrat', sans-serif
+  background-color: #FFFFFF
+  border-radius: 5px
+  -webkit-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.1)
+  -moz-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.1)
+  box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.1)
 
 .content__back
-  width 100%
-  height 50px
-  margin 0
-  padding-left 40px
-  display flex
-  align-items center
+  width: 100%
+  height: 50px
+  margin: 0
+  padding-left: 40px
+  display: flex
+  align-items: flex-end
+  font-family: 'Montserrat-SemiBold', sans-serif
+  font-size: .9em
+  color: #646464
   // border 1px solid
+
+.content__back a
+  text-decoration: none
+  color: #646464
 
 .transaction
-  width 100%
-  display flex
+  width: 100%
+  display: flex
 
 .transaction__detail
-  width 75%
-  height 450px
+  width: 75%
+  height: 450px
   // border 1px solid
-
-.summary
-  width 25%
-  height 450px
-  padding 20px
-  // border 1px solid
-  border-left 1px solid #FFEBD3
 
 .transaction__header
-  width 100%
-  height 100px
-  padding 0 40px
-  display flex
-  justify-content space-between
-  align-items center
+  width: 100%
+  height: 100px
+  padding: 0 40px
+  display: flex
+  justify-content: space-between
+  align-items: center
   // border 1px solid
 
+.header
+  display: flex
+  flex-direction: column
+  margin: 5px
+
+.header__title
+  margin: 0
+  font-family: 'Montserrat-Bold', sans-serif
+  font-size: 24px
+
+.header__title--big
+  font-size: 36px
+
+.header__title--orange
+  color #FF8A00
+
+.header__subtitle
+  font-family: 'Montserrat-Medium', sans-serif
+  font-size: .9em
+  color: #6E6E6E
+
 .transaction__form
-  width 100%
-  padding 0 40px
-  display flex
+  width: 100%
+  padding: 0 40px
+  display: flex
 
 .transaction__info
-  width 60%
-  margin-right 30px
-  display flex
-  flex-direction column
+  width: 60%
+  margin-right: 30px
+  display: flex
+  flex-direction: column
 
 .transaction__dropshipper
-  width 40%
-  display flex
-  flex-direction column
+  width: 40%
+  display: flex
+  flex-direction: column
   
 .form
-  width 100%
-  padding 12px 20px
-  margin 5px
-  font-weight 500
-  font-size 1em
-  border 1px solid #CCCCCC
+  width: 100%
+  padding: 20px 15px
+  margin: 5px
+  font-family: 'Montserrat-Medium', sans-serif
+  font-weight: 500
+  font-size: 1em
+  border: 1px solid #CCCCCC
   
+.form::placeholder
+  opacity: .8
+
+.form__input:focus
+  outline-color: #737272
+
+.form__input--green
+  border: 2px solid #1BD97B
+
+.form__input--green:focus
+  outline-color: #1BD97B
+
+.form__input--orange
+  border: 2px solid #FF8A00
+
+.form__input--orange:focus
+  outline-color: #FF8A00
+
+.form__textarea
+  height 120px
+  resize: none
+
+.icon
+  margin 0 10px
+
+label
+  font-family: 'Montserrat-SemiBold', sans-serif
+  font-size: .9em
+  color: #504E60
+
+.summary
+  width: 25%
+  height: 450px
+  padding: 30px 20px
+  // border 1px solid
+  border-left: 1px solid #FFEBD3
+  display: flex
+  flex-direction: column
+
+.summary__payment
+  margin-top: auto
+  font-family: 'Montserrat', sans-serif
+  font-size: .9em
+
+.summary__cost
+  margin: 10px 0
+  display: flex
+  justify-content: space-between
+  align-items: center
+
+.summary__cost p
+  margin: 5px
+
+.label
+  font-family: 'Montserrat', sans-serif
+  color: #6E6E6E
+
+.label--small
+  font-size: .9em
+
+.label--big
+  font-family: 'Montserrat-Bold', sans-serif
+  font-size: 24px
+
+.label--orange
+  color: #FF8A00
+
+.price
+  font-family: 'Montserrat-Bold', sans-serif
+  color #000000
+
+.price--big
+  font-size: 24px
+
+.price--orange
+  color: #FF8A00
+
+.btn
+  width: 100%
+  height: 60px
+  font-family: 'Montserrat-Medium', sans-serif
+  font-size: 1.3em
+  color: white
+  background-color: #FF8A00
+  border: none
+
+.guide
+  margin: 0 10px 10px 10px
+
+.guide--orange
+  color: #FF8A00
