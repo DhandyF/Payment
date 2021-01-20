@@ -1,6 +1,16 @@
 <template>
   <div class="container">
     <div class="content">
+      <div class="breadcrumb">
+        <p class="breadcrumb__number breadcrumb__number--bg--orange">1</p>
+        <p class="breadcrumb__label">Delivery</p>
+        <img class="breadcrumb__arrow" src="@/assets/images/keyboard_arrow_right.png" alt="next">
+        <p class="breadcrumb__number">2</p>
+        <p class="breadcrumb__label">Payment</p>
+        <img class="breadcrumb__arrow" src="@/assets/images/keyboard_arrow_right.png" alt="next">
+        <p class="breadcrumb__number">3</p>
+        <p class="breadcrumb__label">Finish</p>
+      </div>
       <div class="content__back">
         <a href="#">
           <img class="icon" src="@/assets/images/arrow_back.png" alt="back">
