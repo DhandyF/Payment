@@ -38,7 +38,7 @@
 
 .content
   width: 92%
-  height: 500px
+  height: 550px
   margin: 55px 0 0 0
   display: flex
   flex-direction: column
@@ -51,7 +51,7 @@
 
 .content__back
   width: 100%
-  height: 50px
+  height: fit-content
   margin: 0
   padding-left: 40px
   display: flex
@@ -82,6 +82,9 @@
   justify-content: space-between
   align-items: center
   // border 1px solid
+
+.transaction__header--mt
+  margin-top: 60px
 
 .header
   display: flex
@@ -119,7 +122,7 @@
   width: 40%
   display: flex
   flex-direction: column
-  
+
 .form
   width: 100%
   padding: 20px 15px
@@ -161,7 +164,7 @@ label
 
 .summary
   width: 25%
-  height: 450px
+  height: 490px
   padding: 30px 20px
   // border 1px solid
   border-left: 1px solid #FFEBD3
@@ -207,10 +210,20 @@ label
   color: #FF8A00
 
 .btn
-  width: 100%
+  width: 200px
   height: 60px
+  margin: 5px
   font-family: 'Montserrat-Medium', sans-serif
   font-size: 1.3em
+  color: #82808D
+  background-color: white
+  border: 1px solid #D2D2D2
+  cursor: pointer
+
+.btn--big
+  width: 100%
+
+.btn--orange
   color: white
   background-color: #FF8A00
   border: none
