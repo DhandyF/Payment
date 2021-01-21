@@ -25,9 +25,27 @@
             </div>
           </div>
           <div class="transaction__form">
-            <button class="btn">GO-SEND</button>
-            <button class="btn">JNE</button>
-            <button class="btn">Personal Courier</button>
+            <button 
+              @click="changeShipment('GO-SEND')"
+              class="btn"
+              :class="shipment === 'GO-SEND' ? 'btn--outline--green' : ''"
+            >
+              GO-SEND
+            </button>
+            <button
+              @click="changeShipment('JNE')"
+              class="btn"
+              :class="shipment === 'JNE' ? 'btn--outline--green' : ''"
+            >
+              JNE
+            </button>
+            <button
+              @click="changeShipment('Personal Courier')"
+              class="btn"
+              :class="shipment === 'Personal Courier' ? 'btn--outline--green' : ''"
+            >
+              Personal Courier
+            </button>
           </div>
           <div class="transaction__header transaction__header--mt">
             <div class="header">
@@ -35,9 +53,27 @@
             </div>
           </div>
           <div class="transaction__form">
-            <button class="btn">e-Wallet</button>
-            <button class="btn">Bank Transfer</button>
-            <button class="btn">Virtual Account</button>
+            <button
+              @click="changePayment('e-Wallet')"
+              class="btn"
+              :class="payment === 'e-Wallet' ? 'btn--outline--green' : ''"
+            >
+              e-Wallet
+            </button>
+            <button
+              @click="changePayment('Bank Transfer')"
+              class="btn"
+              :class="payment === 'Bank Transfer' ? 'btn--outline--green' : ''"
+            >
+              Bank Transfer
+            </button>
+            <button
+              @click="changePayment('Virtual Account')"
+              class="btn"
+              :class="payment === 'Virtual Account' ? 'btn--outline--green' : ''"
+            >
+              Virtual Account
+            </button>
           </div>
         </div>
         <div class="summary">
@@ -46,6 +82,10 @@
               <h3 class="header__title header__title--orange">Summary</h3>
               <p class="header__subtitle">{{ user.sumItems }} items purchased</p>
             </div>
+          </div>
+          <div v-show="shipment !== ''" class="summary__detail">
+            <p class="label label--black">Delivery estimation</p>
+            <p class="summary__value">{{ delEstimation + ' ' + 'by' + ' ' + shipment }}</p>
           </div>
           <div class="summary__payment">
             <div class="summary__cost">
@@ -58,10 +98,15 @@
               <p v-else class="price" >0</p>
             </div>
             <div class="summary__cost">
+              <p class="label"><strong>{{ shipment }}</strong> shipment</p>
+              <p v-if="shipment !== ''" class="price">{{ Number(shipmentFee).toLocaleString() }}</p>
+              <p v-else class="price" >0</p>
+            </div>
+            <div class="summary__cost">
               <p class="label label--big label--orange">Total</p>
               <p class="price price--big price--orange">{{ Number(costTotal).toLocaleString() }}</p>
             </div>
-            <button class="btn btn--big btn--orange">Continue to Payment</button>
+            <button class="btn btn--big btn--orange">Pay with {{ payment }}</button>
           </div>
         </div>
       </div>
@@ -73,7 +118,14 @@
 export default {
   data() {
     return {
-      user: {}
+      user: {},
+      shipment: "",
+      shipmentFee: 0,
+      payment: "",
+      goSendFee: 15000,
+      jneFee: 9000,
+      pcFee: 29000,
+      delEstimation: ""
     }
   },
   created() {
@@ -104,6 +156,24 @@ export default {
     },
     backToDelivery() {
       this.$router.push('/')
+    },
+    changeShipment(value) {
+      this.shipment = value
+      if (value === 'GO-SEND') {
+        this.shipmentFee = this.goSendFee
+        this.delEstimation = 'today'
+      }
+      if (value === 'JNE') {
+        this.shipmentFee = this.jneFee
+        this.delEstimation = '2 days'
+      }
+      if (value === 'Personal Courier') {
+        this.shipmentFee = this.pcFee
+        this.delEstimation = '1 day'
+      }
+    },
+    changePayment(value) {
+      this.payment = value
     }
   },
 }

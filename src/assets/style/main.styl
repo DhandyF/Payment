@@ -171,13 +171,23 @@ label
   display: flex
   flex-direction: column
 
+.summary__detail
+  border-top: 1px solid #D2D2D2
+  font-size: .9em
+
+.summary__value
+  margin: 5px 0
+  font-family: 'Montserrat-SemiBold', sans-serif
+  font-size: 1.2em
+  color: #1BD97B
+
 .summary__payment
   margin-top: auto
   font-family: 'Montserrat', sans-serif
   font-size: .9em
 
 .summary__cost
-  margin: 10px 0
+  margin: 5px 0
   display: flex
   justify-content: space-between
   align-items: center
@@ -186,6 +196,7 @@ label
   margin: 5px
 
 .label
+  margin-bottom: 0
   font-family: 'Montserrat', sans-serif
   color: #6E6E6E
 
@@ -198,6 +209,9 @@ label
 
 .label--orange
   color: #FF8A00
+
+.label--black
+  color: #000000
 
 .price
   font-family: 'Montserrat-Bold', sans-serif
@@ -214,11 +228,17 @@ label
   height: 60px
   margin: 5px
   font-family: 'Montserrat-Medium', sans-serif
-  font-size: 1.3em
+  font-size: 18px
   color: #82808D
   background-color: white
   border: 1px solid #D2D2D2
   cursor: pointer
+
+.btn:focus
+  outline: 2px solid #1BD97B
+
+.btn--outline--green
+  outline: 2px solid #1BD97B
 
 .btn--big
   width: 100%
