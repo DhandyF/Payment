@@ -1,7 +1,7 @@
 # payment
 
 > Payment merupakan aplikasi web yang dibangun menggunakan framework Vue.js. Terdapat tiga tahapan dalam alur aplikasi ini.
-Tahapan alus aplikasi:
+Tahapan alur aplikasi:
 1. Pengisian form Delivery details
 	Pada tahap ini user harus mengisi email, phone number, dan address. Apabila pengiriman dikirim sebagai dropshipper maka user harus mengisi nama dan dropshipper phone number. Apabila terdapat kesalahan ketika pengisian form, maka akan terdapat warning bahwa isian form salah atau form belum diisi. Ketika user ingin melanjutkan ke tahap selanjutnya yaitu Payment tetapi masih terdapat kesalahan pada pengisian form, maka akan muncul popup window bahwa masih terdapat kesalahan pada pengisian form.
 	Terdapat bagian Summary, yang menampilkan jumlah barang yang dibeli, harga total barang, biaya dropshipping apabila pengiriman sebagai dropshipper dipilih (sebesar 5900), dan total biaya yang harus dibayar.
