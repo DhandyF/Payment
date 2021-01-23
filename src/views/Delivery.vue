@@ -1,16 +1,7 @@
 <template>
   <div class="container">
     <div class="content">
-      <div class="breadcrumb">
-        <p class="breadcrumb__number breadcrumb__number--bg--orange">1</p>
-        <p class="breadcrumb__label">Delivery</p>
-        <img class="breadcrumb__arrow" src="@/assets/images/keyboard_arrow_right.png" alt="next">
-        <p class="breadcrumb__number">2</p>
-        <p class="breadcrumb__label">Payment</p>
-        <img class="breadcrumb__arrow" src="@/assets/images/keyboard_arrow_right.png" alt="next">
-        <p class="breadcrumb__number">3</p>
-        <p class="breadcrumb__label">Finish</p>
-      </div>
+      <Breadcrumb :state=1></Breadcrumb>
       <div class="content__back">
         <a href="#">
           <img class="icon" src="@/assets/images/arrow_back.png" alt="back">
@@ -30,30 +21,41 @@
           </div>
           <div class="transaction__form">
             <div class="transaction__info">
-              <input 
-                v-model="user.email"
-                class="form form__input"
-                :class="isValidEmail ? 'form__input--green' : user.email !== null ? 'form__input--orange' : ''"
-                type="email"
-                id="email"
-                placeholder="Email"
-                required
-              >
+              <!-- Input email -->
+              <div class="form__container">
+                <input 
+                  v-model="user.email"
+                  class="form form__input"
+                  :class="isValidEmail ? 'form__input--green' : user.email !== null ? 'form__input--orange' : ''"
+                  type="email"
+                  id="email"
+                  placeholder="Email"
+                  required
+                >
+                <p v-show="isValidEmail" class="icon__input icon--green">&#10004;</p>
+                <p v-if="!isValidEmail && user.email != null" class="icon__input icon--orange">&#10006;</p>
+              </div>
               <p
                 class="label label--small guide guide--orange"
                 v-if="user.email !== null && !isValidEmail"
               >
                 Incorrect email<br>(Example: example@gmail.com)
               </p>
-              <input 
-                v-model="user.phoneNumber"
-                class="form form__input" :class="isValidPhone ? 'form__input--green' : user.phoneNumber !== null ? 'form__input--orange' : ''"
-                type="tel"
-                id="phone"
-                name="phone"
-                placeholder="Phone Number"
-                required
-              >
+
+              <!-- Input phone number -->
+              <div class="form__container">
+                <input 
+                  v-model="user.phoneNumber"
+                  class="form form__input" :class="isValidPhone ? 'form__input--green' : user.phoneNumber !== null ? 'form__input--orange' : ''"
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  placeholder="Phone Number"
+                  required
+                >
+                <p v-show="isValidPhone" class="icon__input icon--green">&#10004;</p>
+                <p v-if="!isValidPhone && user.phoneNumber != null" class="icon__input icon--orange">&#10006;</p>
+              </div>
               <p
                 class="label label--small guide guide--orange"
                 v-if="user.phoneNumber !== null && !isValidPhone"
@@ -61,39 +63,70 @@
                 <span v-if="user.phoneNumber.length <= 20">Incorrect phone number</span>
                 <span v-else>Phone number is too long</span> <br> (Example: (+62)123456789 or 08123456789)
               </p>
-              <textarea
-                v-model="user.address"
-                class="form form__textarea"
-                :class="user.address.length !== 0 ? 'form__input--green' : ''"
-                name="address"
-                id="address"
-                cols="30"
-                rows="10"
-                placeholder="Delivery Address"
-                maxlength="120"
-                required
-              ></textarea>
-              <p class="label label--small guide">{{ 120 - user.address.length }} character left</p>
+
+              <!-- Input address -->
+              <div class="form__container">
+                <textarea
+                  v-model="user.address"
+                  class="form form__textarea"
+                  :class="user.address.length > 0 ? 'form__input--green' : addressFocus ? 'form__input--orange' : ''"
+                  name="address"
+                  id="address"
+                  cols="30"
+                  rows="10"
+                  placeholder="Delivery Address"
+                  maxlength="120"
+                  required
+                ></textarea>
+                <p v-show="user.address.length !== 0" class="icon__input icon--green">&#10004;</p>
+                <p v-if="user.address.length == 0 && addressFocus" class="icon__input icon--orange">&#10006;</p>
+              </div>
+                <p class="label label--small guide">{{ 120 - user.address.length }} character left</p>
+                <p
+                  class="label label--small guide guide--orange"
+                  v-if="user.address.length == 0 && addressFocus"
+                >
+                  Address required
+                </p>
             </div>
+            
+            <!-- Form Dropshipper -->
             <div class="transaction__dropshipper">
-              <input
-                v-model="user.dsName"
-                :disabled="!user.isDropshipper"
-                class="form form__input"
-                :class="user.dsName.length ? 'form__input--green' : ''"
-                type="text"
-                id="dropshipper_name"
-                placeholder="Dropshipper name"
+              <!-- Dropshipper name -->
+              <div class="form__container">
+                <input
+                  v-model="user.dsName"
+                  :disabled="!user.isDropshipper"
+                  class="form form__input"
+                  :class="user.dsName.length > 0 ? 'form__input--green' : dsNameFocus && user.isDropshipper ? 'form__input--orange' : ''"
+                  type="text"
+                  id="dropshipper_name"
+                  placeholder="Dropshipper name"
+                >
+                <p v-show="user.dsName.length !== 0" class="icon__input icon--green">&#10004;</p>
+                <p v-if="user.dsName.length == 0 && dsNameFocus && user.isDropshipper" class="icon__input icon--orange">&#10006;</p>
+              </div>
+              <p
+                class="label label--small guide guide--orange"
+                v-if="user.dsName.length == 0 && dsNameFocus && user.isDropshipper"
               >
-              <input
-                v-model="user.dsPhoneNumber"
-                :disabled="!user.isDropshipper"
-                class="form form__input"
-                :class="isValidDSPhone ? 'form__input--green' : user.dsPhoneNumber !== null ? 'form__input--orange' : ''"
-                type="text"
-                id="dropsphipper_phone"
-                placeholder="Dropshipper phone number"
-              >
+                Dropshipper name required
+              </p>
+
+              <!-- Dropshipper phone number -->
+              <div class="form__container">
+                <input
+                  v-model="user.dsPhoneNumber"
+                  :disabled="!user.isDropshipper"
+                  class="form form__input"
+                  :class="isValidDSPhone ? 'form__input--green' : user.dsPhoneNumber !== null ? 'form__input--orange' : ''"
+                  type="text"
+                  id="dropsphipper_phone"
+                  placeholder="Dropshipper phone number"
+                >
+                <p v-show="isValidDSPhone" class="icon__input icon--green">&#10004;</p>
+                <p v-if="!isValidDSPhone && user.dsPhoneNumber != null" class="icon__input icon--orange">&#10006;</p>
+              </div>
               <p
                 class="label label--small guide guide--orange"
                 v-if="user.dsPhoneNumber !== null && !isValidDSPhone"
@@ -134,7 +167,8 @@
       <div class="modal__content">
         <span class="modal__close" @click="closeModal">&times;</span>
         <div class="modal__body">
-          <p v-for="msg in errMsg" :key="msg">{{ msg }}</p>
+          <p class="modal__warning">!</p>
+          <p v-for="msg in errMsg" :key="msg" class="label--medium label--orange">&bull; {{ msg }}</p>
         </div>
       </div>
     </div>
@@ -142,7 +176,12 @@
 </template>
 
 <script>
+import Breadcrumb from '../components/Breadcrumb.vue'
+
 export default {
+  components: {
+    Breadcrumb
+  },
   data() {
     return {
       user: {
@@ -157,6 +196,8 @@ export default {
         dsFee: 0
       },
       dsFee: 5900,
+      addressFocus: false,
+      dsNameFocus: false,
       errMsg: []
     }
   },
@@ -173,8 +214,19 @@ export default {
         this.user.dsName = ""
         this.user.dsPhoneNumber = null
         this.user.dsFee = 0
+        this.dsNameFocus = false
       } else {
         this.user.dsFee = this.dsFee
+      }
+    },
+    'user.address': function() {
+      if (this.user.address.length > 0) {
+        this.addressFocus = true
+      }
+    },
+    'user.dsName': function() {
+      if (this.user.dsName.length > 0) {
+        this.dsNameFocus = true
       }
     }
   },

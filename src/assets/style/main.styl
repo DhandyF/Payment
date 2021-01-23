@@ -29,17 +29,28 @@
   font-display: swap
   src: url('../fonts/Montserrat-Bold.ttf') format('truetype')
 
+@font-face
+  font-family: 'Roboto'
+  font-style: normal
+  font-weight: 400
+  font-display: swap
+  src: url('../fonts/Roboto-Regular.ttf') format('truetype')
+
 .container
   width: 100%
-  height: 657px
+  min-width: 790px
+  // height: 657px
+  min-height: 100vh
+  padding-bottom: 70px
   display: flex
   justify-content: center
   background-color: #FFFAE6
 
 .content
   width: 92%
-  height: 550px
+  min-height: 550px
   margin: 55px 0 0 0
+  padding-bottom: 10px
   display: flex
   flex-direction: column
   font-family: 'Montserrat', sans-serif
@@ -76,8 +87,6 @@
 
 .transaction__detail
   width: 75%
-  height: 450px
-  // border 1px solid
 
 .transaction__detail--center
   padding-left: 20%
@@ -124,6 +133,9 @@
   padding: 0 40px
   display: flex
 
+.transaction__form--wrap
+  flex-wrap: wrap
+
 .transaction__info
   width: 60%
   margin-right: 30px
@@ -147,7 +159,12 @@
   font-weight: 500
   font-size: 1em
   border: 1px solid #CCCCCC
-  
+
+.form__container
+  width: 100%
+  display: flex
+  align-items: center
+
 .form::placeholder
   opacity: .8
 
@@ -167,11 +184,21 @@
   outline-color: #FF8A00
 
 .form__textarea
-  height 120px
+  height: 120px
   resize: none
 
 .icon
-  margin 0 10px
+  margin: 0 10px
+
+.icon__input
+  margin: 0 0 0 -40px
+  font-size: 18px
+
+.icon--green
+  color: #1BD97B
+
+.icon--orange
+  color: #FF8A00
 
 label
   font-family: 'Montserrat-SemiBold', sans-serif
@@ -180,6 +207,7 @@ label
 
 .summary
   width: 25%
+  min-width: 314px
   height: 100%
   padding: 30px 20px
   // border 1px solid
@@ -218,7 +246,10 @@ label
   color: #6E6E6E
 
 .label--small
-  font-size: .9em
+  font-size: 14px
+
+.label--szmedium
+  font-size: 18px
 
 .label--medium
   font-family: 'Montserrat-Medium', sans-serif
@@ -247,15 +278,26 @@ label
   color: #FF8A00
 
 .btn
-  width: 200px
+  max-width: 200px
+  width: 30%
   height: 60px
   margin: 5px
+  padding: 0 15px
   font-family: 'Montserrat-Medium', sans-serif
   font-size: 18px
   color: #82808D
   background-color: white
   border: 1px solid #D2D2D2
   cursor: pointer
+
+.btn__flex
+  padding: 1px 15px
+  display: flex
+  justify-content: center
+  flex-direction: column
+
+.btn__selected
+  background-color: #E8FBF1
 
 .btn:focus
   outline: 2px solid #1BD97B
@@ -264,12 +306,17 @@ label
   outline: 2px solid #1BD97B
 
 .btn--big
+  min-width: 100%
+  max-width: 100%
   width: 100%
 
 .btn--orange
   color: white
   background-color: #FF8A00
   border: none
+
+.btn--left
+  text-align: left
 
 .guide
   margin: 0 10px 10px 10px
@@ -284,6 +331,7 @@ label
   padding: 20px 30px
   border-radius: 35px
   display: flex
+  align-items: center
   font-family: 'Montserrat-SemiBold', sans-serif
   font-size: 1em
   background-color: #FFFAE6
@@ -304,7 +352,7 @@ label
   background-color: #FF8A00
 
 .breadcrumb__label
-  margin: 10px 5px
+  margin: 0 5px
   color: #FF8A00
 
 .breadcrumb__arrow
@@ -327,11 +375,12 @@ label
 
 .modal__content
   position: relative
-  background-color: #FEFEFE
+  background-color:#FFFAE6
   margin: auto
   padding: 0
   border: 1px solid #888888
-  width: 80%
+  border-radius: 10px
+  width: 30%
   -webkit-box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.75);
   -moz-box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.75);
   box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.75);
@@ -340,16 +389,31 @@ label
   animation-name: animatetop
   animation-duration: 1s
 
-.close
+.modal__close
+  padding: 0 10px
   color: #AAAAAA
   float: right
   font-size: 28px
   font-weight: bold
+  cursor: pointer
 
-.close:hover, .close:focus
+.modal__close:hover, .modal__close:focus
   color: #000000
   text-decoration: none
-  cursor: pointer
+
+.modal__body
+  padding: 20px
+
+.modal__warning
+  width: 70px
+  height: 70px
+  margin: 30px auto
+  text-align: center
+  font-family: 'Montserrat-Bold', sans-serif
+  font-size: 50px
+  color: #FF8A00
+  border: 5px solid #FF8A00
+  border-radius: 50px
 
 @-webkit-keyframes animatetop
   from
@@ -366,3 +430,105 @@ label
   to
     top: 0
     opacity: 1
+
+@media screen and (max-width: 1040px)
+  .transaction__header
+    flex-direction: column
+    justify-content: center
+    align-items: flex-start
+  
+  .checkbox
+    padding-left: 10px
+
+  .transaction__form
+    flex-direction: column
+
+  .transaction__info, .transaction__dropshipper
+    width: 100%
+
+  .btn
+    max-width: 100%
+    width: 100%
+
+  .transaction__detail--center
+    padding-left: 0
+
+@media screen and (max-width: 980px)
+  .breadcrumb
+    height: 60px
+    font-size: .9em
+
+  .breadcrumb__number
+    width: 20px
+    height: 20px
+    border-radius: 20px
+
+  .content__back
+    margin-top: 20px
+
+@media screen and (max-width: 450px)
+  .breadcrumb
+    height: 70px
+    font-size: 18px
+
+  .breadcrumb__number
+    width: 40px
+    height: 40px
+    border-radius: 40px
+
+  .content__back
+    font-size: 1.2em
+    margin-top: 30px
+  
+  label
+    font-size: 19px
+
+  .transaction
+    flex-direction: column
+
+  .transaction__header
+    flex-direction: row
+    justify-content: space-between
+    align-items: center
+  
+  .checkbox
+    padding-left: 0
+  
+  .transaction__detail
+    width: 100%
+
+  .summary
+    margin-top: 60px
+    width: 100%
+    padding: 20px 40px
+    border-top: 2px solid #D2D2D2
+
+  .form
+    font-size: 22px
+
+  .header__title 
+    font-size: 32px
+
+  .header__subtitle
+    font-size: 24px
+  
+  .label
+    font-size: 22px
+  
+  .label--big
+    font-size: 24px
+
+  .price
+    font-size: 22px
+
+  .price--big
+    font-size: 24px
+
+  .btn
+    font-size: 24px
+  
+  .modal__content
+    width: 50%
+
+  .modal__body .label--medium
+    font-size: 22px

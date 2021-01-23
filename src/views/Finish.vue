@@ -1,7 +1,8 @@
 <template>
   <div class="container">
     <div class="content">
-      <div class="breadcrumb">
+      <Breadcrumb :state=3></Breadcrumb>
+      <!-- <div class="breadcrumb">
         <p class="breadcrumb__number breadcrumb__number--bg--orange">1</p>
         <p class="breadcrumb__label">Delivery</p>
         <img class="breadcrumb__arrow" src="@/assets/images/keyboard_arrow_right.png" alt="next">
@@ -10,7 +11,7 @@
         <img class="breadcrumb__arrow" src="@/assets/images/keyboard_arrow_right.png" alt="next">
         <p class="breadcrumb__number breadcrumb__number--bg--orange">3</p>
         <p class="breadcrumb__label">Finish</p>
-      </div>
+      </div> -->
       <div class="transaction">
         <div class="transaction__detail transaction__detail--center">
           <div class="transaction__header">
@@ -20,7 +21,7 @@
           </div>
           <div class="transaction__form">
             <div class="transaction__info transaction__info--center">
-              <p class="label label--semibold label--black">Order ID: XXKYB</p>
+              <p class="label label--semibold label--black">Order ID: {{ randomString }}</p>
               <p class="label">Your order will be delivered {{ payment.delEstimation }} with {{ payment.shipment }}</p>
               <div class="content__back content__back--center">
                 <a href="#" @click="backToHomePage">
@@ -71,7 +72,12 @@
 </template>
 
 <script>
+import Breadcrumb from '../components/Breadcrumb.vue'
+
 export default {
+  components: {
+    Breadcrumb
+  },
   data() {
     return {
       user: {},
@@ -81,12 +87,26 @@ export default {
   created() {
     this.loadData()
   },
+  computed: {
+    randomString() {
+      let str = ''
+      let char = ''
+      while (str.split('').length < 5) {
+        char = Math.random().toString(36).substring(2, 3)
+        char = char.toUpperCase()
+        if (char != '1' && char != '0' && char != 'I' && char != 'O' && char != 1 && char != 0) {
+          str += char
+        }
+      }
+
+      return str
+    }
+  },
   methods: {
     loadData() {
       if (localStorage.getItem('userData')) {
         try {
           this.user = JSON.parse(localStorage.getItem('userData'))
-          console.log(this.user);
         } catch (err) {
           localStorage.removeItem('userData')
         }
@@ -94,7 +114,6 @@ export default {
       if (localStorage.getItem('userPayment')) {
         try {
           this.payment = JSON.parse(localStorage.getItem('userPayment'))
-          console.log(this.payment);
         } catch (err) {
           localStorage.removeItem('userPayment')
         }
