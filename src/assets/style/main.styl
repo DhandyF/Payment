@@ -61,18 +61,30 @@
   color: #646464
   // border 1px solid
 
+.content__back--center
+  margin-top: 70px
+  padding-left: 0
+
 .content__back a
   text-decoration: none
   color: #646464
 
 .transaction
   width: 100%
+  height: 100%
   display: flex
 
 .transaction__detail
   width: 75%
   height: 450px
   // border 1px solid
+
+.transaction__detail--center
+  padding-left: 20%
+  display: flex
+  flex-direction: column
+  align-items: center
+  justify-content: center
 
 .transaction__header
   width: 100%
@@ -117,6 +129,10 @@
   margin-right: 30px
   display: flex
   flex-direction: column
+
+.transaction__info--center
+  width: 100%
+  padding-left: 10px
 
 .transaction__dropshipper
   width: 40%
@@ -164,7 +180,7 @@ label
 
 .summary
   width: 25%
-  height: 490px
+  height: 100%
   padding: 30px 20px
   // border 1px solid
   border-left: 1px solid #FFEBD3
@@ -172,6 +188,7 @@ label
   flex-direction: column
 
 .summary__detail
+  padding: 20px 0
   border-top: 1px solid #D2D2D2
   font-size: .9em
 
@@ -196,12 +213,18 @@ label
   margin: 5px
 
 .label
-  margin-bottom: 0
+  margin: 0
   font-family: 'Montserrat', sans-serif
   color: #6E6E6E
 
 .label--small
   font-size: .9em
+
+.label--medium
+  font-family: 'Montserrat-Medium', sans-serif
+
+.label--semibold
+  font-family: 'Montserrat-SemiBold', sans-serif
 
 .label--big
   font-family: 'Montserrat-Bold', sans-serif
@@ -288,3 +311,58 @@ label
   width: fit-content
   height: fit-content
   margin: 13px 25px
+
+.modal
+  width: 100%
+  height: 100%
+  padding-top: 100px
+  z-index: 1
+  left: 0
+  top: 0
+  display: none
+  position: fixed
+  overflow: auto
+  background-color: rgb(0,0,0)
+  background-color: rgba(0,0,0,0.4)
+
+.modal__content
+  position: relative
+  background-color: #FEFEFE
+  margin: auto
+  padding: 0
+  border: 1px solid #888888
+  width: 80%
+  -webkit-box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.75);
+  -webkit-animation-name: animatetop
+  -webkit-animation-duration: 1s
+  animation-name: animatetop
+  animation-duration: 1s
+
+.close
+  color: #AAAAAA
+  float: right
+  font-size: 28px
+  font-weight: bold
+
+.close:hover, .close:focus
+  color: #000000
+  text-decoration: none
+  cursor: pointer
+
+@-webkit-keyframes animatetop
+  from
+    top: -300px
+    opacity: 0
+  to
+    top: 0
+    opacity: 1
+
+@keyframes animatetop
+  from
+    top: -300px
+    opacity: 0
+  to
+    top: 0
+    opacity: 1

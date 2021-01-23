@@ -1,7 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Delivery from '@/views/Delivery'
-import Payment from '@/views/Payment'
 
 Vue.use(Router)
 
@@ -10,12 +8,17 @@ export default new Router({
     {
       path: '/',
       name: 'Delivery',
-      component: Delivery
+      component: () => import('../views/Delivery.vue'),
     },
     {
       path: '/payment',
       name: 'Payment',
-      component: Payment
+      component: () => import('../views/Payment.vue'),
+    },
+    {
+      path: '/finish',
+      name: 'Finish',
+      component: () => import('../views/Finish.vue')
     }
   ]
 })

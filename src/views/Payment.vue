@@ -94,8 +94,7 @@
             </div>
             <div class="summary__cost">
               <p class="label">Dropshipping Fee</p>
-              <p v-if="user.dsFee !== 0" class="price">{{ Number(user.dsFee).toLocaleString() }}</p>
-              <p v-else class="price" >0</p>
+              <p class="price">{{ Number(user.dsFee).toLocaleString() }}</p>
             </div>
             <div class="summary__cost">
               <p class="label"><strong>{{ shipment }}</strong> shipment</p>
@@ -106,7 +105,7 @@
               <p class="label label--big label--orange">Total</p>
               <p class="price price--big price--orange">{{ Number(costTotal).toLocaleString() }}</p>
             </div>
-            <button class="btn btn--big btn--orange">Pay with {{ payment }}</button>
+            <button class="btn btn--big btn--orange" @click="goToFinish">Pay with {{ payment }}</button>
           </div>
         </div>
       </div>
@@ -132,12 +131,12 @@ export default {
     window.addEventListener('beforeunload', this.storeToLocal)
     this.loadData()
   },
+  beforeDestroy() {
+    window.removeEventListener('beforeunload', this.storeToLocal)
+  },
   computed: {
     costTotal() {
-      if (this.user.isDropshipper) {
-        return this.user.costGoods + this.user.dsFee
-      }
-      return this.user.costGoods
+      return this.user.costGoods + this.user.dsFee + this.shipmentFee
     }
   },
   methods: {
@@ -149,12 +148,32 @@ export default {
           localStorage.removeItem('userData')
         }
       }
+      if (localStorage.getItem('userPayment')) {
+        try {
+          let userPayment = JSON.parse(localStorage.getItem('userPayment'))
+
+          this.shipment = userPayment.shipment
+          this.shipmentFee = userPayment.shipmentFee
+          this.payment = userPayment.payment
+          this.delEstimation = userPayment.delEstimation
+        } catch (err) {
+          localStorage.removeItem('userPayment')
+        }
+      }
     },
     storeToLocal() {
-      let userData = JSON.stringify(this.user)
-      localStorage.setItem('userData', userData)
+      let userPayment = {
+        shipment: this.shipment,
+        shipmentFee: this.shipmentFee,
+        payment: this.payment,
+        delEstimation: this.delEstimation,
+        costTotal: this.costTotal
+      }
+      localStorage.setItem('userData', JSON.stringify(this.user))
+      localStorage.setItem('userPayment', JSON.stringify(userPayment))
     },
     backToDelivery() {
+      this.storeToLocal()
       this.$router.push('/')
     },
     changeShipment(value) {
@@ -174,6 +193,10 @@ export default {
     },
     changePayment(value) {
       this.payment = value
+    },
+    goToFinish() {
+      this.storeToLocal()
+      this.$router.push('/finish')
     }
   },
 }

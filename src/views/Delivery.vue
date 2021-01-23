@@ -43,7 +43,7 @@
                 class="label label--small guide guide--orange"
                 v-if="user.email !== null && !isValidEmail"
               >
-                Email required<br>(Example: example@gmail.com)
+                Incorrect email<br>(Example: example@gmail.com)
               </p>
               <input 
                 v-model="user.phoneNumber"
@@ -58,7 +58,8 @@
                 class="label label--small guide guide--orange"
                 v-if="user.phoneNumber !== null && !isValidPhone"
               >
-                Phone number required<br> (Example: (+62)123456789 or 08123456789)
+                <span v-if="user.phoneNumber.length <= 20">Incorrect phone number</span>
+                <span v-else>Phone number is too long</span> <br> (Example: (+62)123456789 or 08123456789)
               </p>
               <textarea
                 v-model="user.address"
@@ -97,7 +98,8 @@
                 class="label label--small guide guide--orange"
                 v-if="user.dsPhoneNumber !== null && !isValidDSPhone"
               >
-                Phone number required<br> (Example: (+62)123456789 or 08123456789)
+                <span v-if="user.dsPhoneNumber.length <= 20">Incorrect phone number</span>
+                <span v-else>Phone number is too long</span> <br> (Example: (+62)123456789 or 08123456789)
               </p>
             </div>
           </div>
@@ -116,15 +118,23 @@
             </div>
             <div class="summary__cost">
               <p class="label">Dropshipping Fee</p>
-              <p v-if="user.isDropshipper" class="price">{{ Number(user.dsFee).toLocaleString() }}</p>
-              <p v-else class="price" >0</p>
+              <p class="price">{{ Number(user.dsFee).toLocaleString() }}</p>
             </div>
             <div class="summary__cost">
               <p class="label label--big label--orange">Total</p>
               <p class="price price--big price--orange">{{ Number(costTotal).toLocaleString() }}</p>
             </div>
-            <button class="btn btn--big btn--orange" @click="goToPayment">Continue to Payment</button>
+            <button class="btn btn--big btn--orange" @click="formValidator">Continue to Payment</button>
           </div>
+        </div>
+      </div>
+    </div>
+    <!-- Popup Modal -->
+    <div id="modal" class="modal">
+      <div class="modal__content">
+        <span class="modal__close" @click="closeModal">&times;</span>
+        <div class="modal__body">
+          <p v-for="msg in errMsg" :key="msg">{{ msg }}</p>
         </div>
       </div>
     </div>
@@ -139,13 +149,15 @@ export default {
         isDropshipper: false,
         email: null,
         phoneNumber: null,
-        address: "",
-        dsName: "",
+        address: '',
+        dsName: '',
         dsPhoneNumber: null,
         sumItems: 10,
         costGoods: 500000,
-        dsFee: 5900
-      }
+        dsFee: 0
+      },
+      dsFee: 5900,
+      errMsg: []
     }
   },
   created() {
@@ -160,6 +172,9 @@ export default {
       if (!this.user.isDropshipper) {
         this.user.dsName = ""
         this.user.dsPhoneNumber = null
+        this.user.dsFee = 0
+      } else {
+        this.user.dsFee = this.dsFee
       }
     }
   },
@@ -191,8 +206,7 @@ export default {
       }
     },
     storeToLocal() {
-      let userData = JSON.stringify(this.user)
-      localStorage.setItem('userData', userData)
+      localStorage.setItem('userData', JSON.stringify(this.user))
     },
     emailValidator(email) {
       let pattern = new RegExp("^[\\w.-]+@([\\w-]+\\.)+[\\w-]{2,4}$")
@@ -202,7 +216,90 @@ export default {
       let pattern = new RegExp("^(([(]{1}[+]{1}[0-9]{1,4}[)]{1})|[0]){1}[-0-9]{5,19}$")
       return pattern.test(phone)
     },
+    checkEmail() {
+      let errMsg = []
+      
+      if (this.user.email == null) {
+        errMsg.push('Email required')
+      } else {
+        if (!this.emailValidator(this.user.email)) errMsg.push('Incorrect email')
+      }
+
+      return errMsg
+    },
+    checkPhone() {
+      let errMsg = []
+
+      if (this.user.phoneNumber == null) {
+        errMsg.push('Phone number required')
+      } else {
+        if (!this.phoneValidator(this.user.phoneNumber)) errMsg.push('Incorrect phone number')
+      }
+
+      return errMsg
+    },
+    checkAddress() {
+      let errMsg = []
+
+      if (this.user.address == '') errMsg.push('Address required')
+
+      return errMsg
+    },
+    checkDSName() {
+      let errMsg = []
+
+      if (this.user.isDropshipper && this.user.dsName == '') errMsg.push('Dropshipper name required')
+
+      return errMsg
+    },
+    checkDSPhone() {
+      let errMsg = []
+
+      if (this.user.isDropshipper) {
+        if (this.user.dsPhoneNumber == null) {
+          errMsg.push('Dropshipper phone number required')
+        } else {
+          if (!this.phoneValidator(this.user.dsPhoneNumber)) errMsg.push('Incorrect dropshipper phone number')
+        }
+      }
+
+      return errMsg
+    },
+    showModal(errMsg) {
+      let modal = document.getElementById('modal')
+
+      this.errMsg = errMsg
+
+      modal.style.display = 'block'
+
+      window.onclick = function(event) {
+        if (event.target == modal) {
+          modal.style.display = 'none'
+        }
+      }
+    },
+    closeModal() {
+      let modal = document.getElementById('modal')
+      modal.style.display = 'none'
+    },
+    formValidator() {
+      let errMsg = []
+
+      if (this.checkEmail().length != 0) errMsg.push(this.checkEmail()[0])
+      if (this.checkPhone().length != 0) errMsg.push(this.checkPhone()[0])
+      if (this.checkAddress().length != 0) errMsg.push(this.checkAddress()[0])
+      if (this.checkDSName().length != 0) errMsg.push(this.checkDSName()[0])
+      if (this.checkDSPhone().length != 0) errMsg.push(this.checkDSPhone()[0])
+
+      console.log(errMsg);
+      if (errMsg.length > 0) {
+        this.showModal(errMsg)
+      } else {
+        this.goToPayment()
+      }
+    },
     goToPayment() {
+      this.storeToLocal()
       this.$router.push('/payment')
     }
   },
